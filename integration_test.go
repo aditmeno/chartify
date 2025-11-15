@@ -369,7 +369,7 @@ func doTest(t *testing.T, tc integrationTestCase) {
 
 	ctx := context.Background()
 
-	r := New(UseHelm3(true), HelmBin(helm))
+	r := New(UseHelm4(true), HelmBin(helm))
 
 	tmpDir, err := r.Chartify(tc.release, tc.chart, WithChartifyOpts(&tc.opts))
 	t.Cleanup(func() {

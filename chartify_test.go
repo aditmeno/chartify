@@ -118,7 +118,7 @@ func TestUseHelmChartsInKustomize(t *testing.T) {
 	repo := "myrepo"
 	startServer(t, repo)
 
-	r := New(UseHelm3(true), HelmBin(helm))
+	r := New(UseHelm4(true), HelmBin(helm))
 
 	tests := []struct {
 		name string

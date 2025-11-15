@@ -11,7 +11,7 @@ import (
 
 	"github.com/Masterminds/semver/v3"
 	"github.com/otiai10/copy"
-	"helm.sh/helm/v3/pkg/registry"
+	"helm.sh/helm/v4/pkg/registry"
 )
 
 var (

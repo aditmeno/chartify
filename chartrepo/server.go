@@ -18,9 +18,10 @@ import (
 	"strings"
 	"time"
 
-	"helm.sh/helm/v3/pkg/chart/loader"
-	"helm.sh/helm/v3/pkg/provenance"
-	"helm.sh/helm/v3/pkg/repo"
+	"helm.sh/helm/v4/pkg/chart/loader"
+	v2 "helm.sh/helm/v4/pkg/chart/v2"
+	"helm.sh/helm/v4/pkg/provenance"
+	repo "helm.sh/helm/v4/pkg/repo/v1"
 )
 
 type Server struct {
@@ -222,10 +223,17 @@ func addToIndexFile(worktree string, indexFile *repo.IndexFile, url string) erro
 
 	// extract chart metadata
 	fmt.Printf("Extracting chart metadata from %s\n", arch)
-	c, err := loader.LoadFile(arch)
+	charter, err := loader.LoadFile(arch)
 	if err != nil {
 		return fmt.Errorf("%s is not a helm chart package: %w", arch, err)
 	}
+
+	// Convert Charter to v2.Chart to access metadata
+	c, ok := charter.(*v2.Chart)
+	if !ok {
+		return fmt.Errorf("chart is not a v2 chart")
+	}
+
 	// calculate hash
 	fmt.Printf("Calculating Hash for %s\n", arch)
 	hash, err := provenance.DigestFile(arch)

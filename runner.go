@@ -21,7 +21,7 @@ type Runner struct {
 	// KustomizeBinary is the name or the path to `kustomize` command
 	KustomizeBinary string
 
-	isHelm3 bool
+	isHelm4 bool
 
 	RunCommand RunCommandFunc
 
@@ -46,9 +46,9 @@ func HelmBin(b string) Option {
 	}
 }
 
-func UseHelm3(u bool) Option {
+func UseHelm4(u bool) Option {
 	return func(r *Runner) error {
-		r.isHelm3 = u
+		r.isHelm4 = u
 		return nil
 	}
 }
@@ -161,13 +161,13 @@ OUTPUT:
 	return bytes, nil
 }
 
-func (r *Runner) IsHelm3() bool {
-	if r.isHelm3 {
+func (r *Runner) IsHelm4() bool {
+	if r.isHelm4 {
 		return true
 	}
 
 	// Support explicit opt-in via environment variable
-	if os.Getenv("HELM_X_HELM3") != "" {
+	if os.Getenv("HELM_X_HELM4") != "" {
 		return true
 	}
 
@@ -177,7 +177,7 @@ func (r *Runner) IsHelm3() bool {
 		panic(err)
 	}
 
-	return sv.Major() == 3
+	return sv.Major() == 4
 }
 
 // DetectHelmVersion detects the version of Helm installed on the system.
